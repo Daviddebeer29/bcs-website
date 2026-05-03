@@ -928,6 +928,21 @@
   /* ── FOOTER LIGHT THEME ──────────────────────────── */
   [data-theme="light"] footer { border-top-color: var(--border-default); }
 
+  /* ── SQUARE BUTTONS ──────────────────────────────── */
+  .btn-primary,
+  .btn-nav,
+  .btn-whatsapp,
+  .btn-ghost,
+  .btn-submit {
+    border-radius: 0;
+  }
+  .btn-primary  { border: 1px solid var(--electric); }
+  .btn-nav      { border: 1px solid var(--electric); }
+  .btn-whatsapp { border: 1px solid rgba(255,255,255,0.28); }
+  .btn-ghost    { border-radius: 0; }
+  .btn-submit   { border: 1px solid var(--electric); border-radius: 0; }
+  .theme-toggle { border-radius: 0; }
+
   @media (max-width: 900px) {
     .nav-hamburger { display: flex; }
     .btn-nav { display: none; }
