@@ -949,6 +949,7 @@
   /* ── SERVICES SLIDER ──────────────────────────────── */
   .services-slider-wrap {
     position: relative;
+    padding: 0 56px;
   }
   .services-slider {
     display: flex;
@@ -960,13 +961,101 @@
     padding-bottom: 4px;
   }
   .services-slider::-webkit-scrollbar { display: none; }
+
+  /* ── Slider nav buttons ── */
+  .slider-btn {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    z-index: 10;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(5, 12, 32, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(42, 127, 212, 0.40);
+    color: var(--electric);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    line-height: 1;
+    padding: 0;
+  }
+  .slider-btn:hover {
+    background: rgba(42, 127, 212, 0.28);
+    border-color: var(--electric);
+    box-shadow: 0 0 22px rgba(0, 212, 255, 0.40), inset 0 0 10px rgba(42,127,212,0.12);
+    transform: translateY(-50%) scale(1.12);
+    color: #00d4ff;
+  }
+  .slider-btn:active {
+    transform: translateY(-50%) scale(0.97);
+  }
+  .slider-prev { left: 0; }
+  .slider-next { right: 0; }
+
+  /* ── Slider dots ── */
+  .slider-dots {
+    display: flex; gap: 8px; justify-content: center;
+    margin-top: 20px;
+  }
+  .slider-dot {
+    width: 6px; height: 6px;
+    border-radius: 3px;
+    background: rgba(42,127,212,0.30);
+    cursor: pointer;
+    transition: background 0.3s ease, width 0.3s ease;
+  }
+  .slider-dot.active {
+    width: 22px;
+    background: var(--electric);
+    box-shadow: 0 0 8px rgba(0,212,255,0.5);
+  }
+
+  /* ── Service card sizing in slider ── */
   .service-card {
-    flex: 0 0 320px;
+    flex: 0 0 300px;
     scroll-snap-align: start;
     min-height: 480px;
   }
+
+  /* ── Water fill on card body ── */
+  .service-card-body {
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card-body::before {
+    content: '';
+    position: absolute;
+    left: -8%; bottom: 0;
+    width: 116%; height: 0%;
+    background: linear-gradient(
+      to top,
+      rgba(4, 22, 72, 0.97) 0%,
+      rgba(14, 54, 140, 0.92) 35%,
+      rgba(42, 127, 212, 0.82) 68%,
+      rgba(0, 200, 255, 0.52) 100%
+    );
+    border-radius: 46% 54% 0 0 / 22px 18px 0 0;
+    transition: height 0.78s cubic-bezier(0.16, 1, 0.30, 1);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .service-card:hover .service-card-body::before {
+    height: 118%;
+    animation: water-swell 3s ease-in-out infinite;
+  }
+  @keyframes water-swell {
+    0%, 100% { border-radius: 46% 54% 0 0 / 22px 16px 0 0; }
+    33%       { border-radius: 54% 46% 0 0 / 14px 24px 0 0; }
+    66%       { border-radius: 42% 58% 0 0 / 26px 12px 0 0; }
+  }
+  .service-card-body > * { position: relative; z-index: 1; }
+
   @media (max-width: 600px) {
     .service-card { flex: 0 0 88vw; }
+    .services-slider-wrap { padding: 0 44px; }
+    .slider-btn { width: 40px; height: 40px; font-size: 1rem; }
   }
 
   /* ── ABOUT PANEL VISUAL ───────────────────────────── */
@@ -1252,8 +1341,8 @@
     .hero-ctas .btn-primary, .hero-ctas .btn-whatsapp, .hero-ctas .btn-ghost { width: 100%; justify-content: center; }
     .why-grid { grid-template-columns: 1fr; }
     .section-divider::before { left: 10%; right: 10%; }
-    .slider-prev { left: -14px; }
-    .slider-next { right: -14px; }
+    .slider-prev { left: 2px; }
+    .slider-next { right: 2px; }
   }
 
 </style>
