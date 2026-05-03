@@ -1246,7 +1246,14 @@
   }
 
 </style>
-<!-- Google Analytics — replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+<!-- Google Analytics 4
+     DEVELOPER SETUP (uses your own Google account — no client access needed):
+       1. Go to https://analytics.google.com
+       2. Admin → Create Property → enter site details
+       3. Data Streams → Add Stream → Web → enter site URL
+       4. Copy the Measurement ID (format: G-XXXXXXXXXX)
+       5. Replace BOTH instances of G-XXXXXXXXXX below and redeploy
+     NOTE: Share the GA property with the client later via Admin → Property Access Management -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -1801,6 +1808,9 @@
   <span class="theme-icon-sun">☀</span>
 </button>
 
+<!-- EmailJS SDK — delivers form submissions without server code -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
   // Move hero background image to fixed site-bg div (whole-page background)
   (function() {
@@ -1858,14 +1868,27 @@
     document.body.style.overflow = '';
   }));
 
-  // ── Live contact form (Formspree) ─────────────────────────────────
-  // SETUP: 1) Go to https://formspree.io  2) Sign up free with barnardcontrolsystems@gmail.com
-  //        3) Create a new form  4) Replace YOUR_FORM_ID below with your form's ID
-  const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+  // ── Live contact form via EmailJS ────────────────────────────────────
+  // DEVELOPER SETUP (one-time, no client email access needed):
+  //   1. Go to https://www.emailjs.com  → sign up FREE with chariskimbeki@gmail.com
+  //   2. Email Services → Add Service → Gmail → connect your Gmail → note SERVICE_ID
+  //   3. Email Templates → Create Template:
+  //        To:      barnardcontrolsystems@gmail.com
+  //        Subject: New BCS Website Enquiry — {{service}}
+  //        Body:    Name: {{name}} | Phone: {{phone}} | Email: {{from_email}}
+  //                 Service: {{service}}
+  //                 Message: {{message}}
+  //      → note TEMPLATE_ID
+  //   4. Account → API Keys → copy Public Key
+  //   5. Paste the three values below and deploy — done.
+  (function(){
+    if (typeof emailjs === 'undefined') return;
+    emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
 
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const btn    = document.getElementById('submitBtn');
       const status = document.getElementById('formStatus');
@@ -1873,28 +1896,21 @@
       btn.textContent = 'Sending…'; btn.disabled = true;
       status.className = 'form-status'; status.textContent = '';
 
-      try {
-        const res = await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          body: new FormData(contactForm),
-          headers: { Accept: 'application/json' }
-        });
-        if (res.ok) {
-          status.textContent = '✓ Message received! We'll be in touch within 24 hours.';
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', contactForm)
+        .then(function() {
+          status.textContent = '✓ Message received! We\'ll be in touch within 24 hours.';
           status.className = 'form-status success';
           contactForm.reset();
           if (typeof gtag !== 'undefined') gtag('event', 'form_submit', { event_category: 'Contact' });
-        } else {
-          const data = await res.json();
-          throw new Error(data.errors ? data.errors.map(e=>e.message).join(', ') : 'Submission failed');
-        }
-      } catch (err) {
-        status.textContent = '✗ ' + (err.message || 'Something went wrong') + '. Call us directly: 079 503 5984';
-        status.className = 'form-status error';
-      }
-      btn.textContent = orig; btn.disabled = false;
+        }, function(err) {
+          status.textContent = '✗ Could not send — please call 079 503 5984 directly. (' + JSON.stringify(err) + ')';
+          status.className = 'form-status error';
+        })
+        .finally(function() {
+          btn.textContent = orig; btn.disabled = false;
+        });
     });
-  }
+  })();
 
   // Services slider
   const slider = document.getElementById('servicesSlider');
