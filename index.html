@@ -2138,7 +2138,7 @@
 
   (function(){
     if (typeof emailjs === 'undefined') return;
-    emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
+    emailjs.init({ publicKey: 'k0TXver8XTI0GBHVT' });
 
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
@@ -2151,7 +2151,7 @@
       btn.textContent = 'Sending…'; btn.disabled = true;
       status.className = 'form-status'; status.textContent = '';
 
-      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', contactForm)
+      emailjs.sendForm('service_69o809k', 'template_2ugn2ws', contactForm)
         .then(function() {
           status.textContent = '✓ Message received! We\'ll be in touch within 24 hours.';
           status.className = 'form-status success';
