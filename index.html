@@ -105,6 +105,16 @@
     --electric: oklch(65% 0.18 245);
     --bright: oklch(75% 0.16 240);
   }
+  /* Hero own background in light mode — site-bg is light so hero must self-supply */
+  [data-theme="light"] .hero {
+    background-image: url('hero_bg.png');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+  [data-theme="light"] .hero::before {
+    background: rgba(4, 8, 20, 0.60) !important;
+  }
 
   /* Light-theme section background overrides */
 
