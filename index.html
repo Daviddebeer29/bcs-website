@@ -1067,8 +1067,8 @@
     background: rgba(4, 8, 20, 0.38);
   }
 
-  /* All sections transparent — background image shows through */
-  body { background: transparent; }
+  /* Sections transparent — background image shows through; dark fallback preserved via :root */
+  body { background-color: #07070D; }
 
   /* ── SERVICES QUOTE CTA ───────────────────────────── */
   .services-cta-wrap {
@@ -1809,7 +1809,7 @@
 </button>
 
 <!-- EmailJS SDK — delivers form submissions without server code -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
   // Move hero background image to fixed site-bg div (whole-page background)
