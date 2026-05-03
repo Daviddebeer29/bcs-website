@@ -1,0 +1,15 @@
+{
+  "project": {
+    "name": "BCS Website",
+    "description": "Barnard Control Systems landing page - Western Cape electrical contractor",
+    "conventions": [
+      "Single-page static HTML site, no framework",
+      "Dark theme with cyan/blue accents - industrial aesthetic",
+      "Mobile-first responsive design",
+      "Vercel deployment - static files only",
+      "Keep all CSS inline or in single file",
+      "Images go in /public/images/",
+      "Sprinter Protocol: terse commits, no narration"
+    ]
+  }
+}
