@@ -107,15 +107,7 @@
   }
 
   /* Light-theme section background overrides */
-  [data-theme="light"] .section-services,
-  [data-theme="light"] .section-work,
-  [data-theme="light"] .section-areas,
-  [data-theme="light"] .section-contact {
-    background: linear-gradient(180deg, var(--background) 0%, var(--surface) 50%, var(--background) 100%);
-  }
-  [data-theme="light"] .section-services::before {
-    background: repeating-linear-gradient(90deg, transparent 0px, transparent 59px, rgba(26,95,170,0.04) 60px);
-  }
+
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   
@@ -657,6 +649,14 @@
     transition: all var(--transition);
     outline: none;
   }
+  select.form-input {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232a7fd4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px; cursor: pointer;
+  }
+  select.form-input option { background: var(--surface-elevated); color: var(--text-primary); }
   .form-input:focus {
     border-color: var(--electric);
     background: var(--surface-elevated);
@@ -1067,25 +1067,8 @@
     background: rgba(4, 8, 20, 0.38);
   }
 
-  /* Semi-transparent section backgrounds (let image breathe through) */
+  /* All sections transparent — background image shows through */
   body { background: transparent; }
-  .section-services  { background: rgba(6, 7, 14, 0.86); }
-  .section-about     { background: rgba(6, 7, 14, 0.82); }
-  .section-work      { background: rgba(6, 7, 14, 0.88); }
-  .section-why       { background: rgba(6, 7, 14, 0.80); }
-  .section-areas     { background: rgba(6, 7, 14, 0.86); }
-  .section-testimonials { background: rgba(6, 7, 14, 0.80); }
-  .section-contact   { background: rgba(6, 7, 14, 0.90); }
-  footer             { background: rgba(4, 6, 12, 0.92); }
-
-  [data-theme="light"] .section-services,
-  [data-theme="light"] .section-work,
-  [data-theme="light"] .section-areas,
-  [data-theme="light"] .section-contact { background: rgba(242,245,251,0.92); }
-  [data-theme="light"] .section-about,
-  [data-theme="light"] .section-why,
-  [data-theme="light"] .section-testimonials { background: rgba(242,245,251,0.88); }
-  [data-theme="light"] footer { background: rgba(228,235,248,0.95); }
 
   /* ── SERVICES QUOTE CTA ───────────────────────────── */
   .services-cta-wrap {
@@ -1106,18 +1089,171 @@
   /* ── CONTACT SUB SIZE FIX ─────────────────────────── */
   .contact-sub { font-size: 1.1rem; font-weight: 400; color: var(--silver); margin-bottom: var(--space-xl); }
 
-  /* ── SECTION SEPARATORS ───────────────────────────── */
-  .section-services, .section-about, .section-work,
-  .section-why, .section-areas, .section-testimonials,
-  .section-contact {
-    border-top: 1px solid rgba(42,127,212,0.08);
-  }
+
 
   @media (max-width: 900px) {
     .nav-hamburger { display: flex; }
     .btn-nav { display: none; }
   }
+  /* ── SECTION DIVIDERS ─────────────────────────────── */
+  .section-divider {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 24px; position: relative; overflow: visible;
+  }
+  .section-divider::before {
+    content: '';
+    position: absolute; left: 5%; right: 5%; top: 50%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(42,127,212,0.10) 15%,
+      rgba(42,127,212,0.28) 45%,
+      rgba(0,212,255,0.35) 50%,
+      rgba(42,127,212,0.28) 55%,
+      rgba(42,127,212,0.10) 85%,
+      transparent 100%
+    );
+  }
+  .section-divider::after {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--electric);
+    transform: rotate(45deg);
+    position: relative; z-index: 1;
+    box-shadow: 0 0 8px var(--electric), 0 0 16px rgba(42,127,212,0.4);
+  }
+
+  /* ── FOOTER UPGRADE ───────────────────────────────── */
+  footer {
+    background: rgba(4,6,14,0.92);
+    border-top: 1px solid rgba(42,127,212,0.12);
+    padding: 0;
+  }
+  [data-theme="light"] footer { background: rgba(15,30,60,0.94); }
+
+  .footer-grid {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: var(--space-3xl) var(--space-xl);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.4fr 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+  .footer-col-brand .footer-logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #F0F0F5; margin-bottom: var(--space-sm);
+  }
+  .footer-col-brand .footer-logo-sub {
+    font-size: 0.68rem; letter-spacing: 0.22em;
+    color: var(--electric); text-transform: uppercase;
+    margin-bottom: var(--space-lg);
+  }
+  .footer-col-brand p {
+    font-size: var(--text-sm); color: rgba(255,255,255,0.42);
+    line-height: 1.7; max-width: 260px;
+  }
+  .footer-col-heading {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--electric); margin-bottom: var(--space-lg);
+  }
+  .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); }
+  .footer-col-links li a, .footer-col-links li {
+    font-size: var(--text-sm); color: rgba(255,255,255,0.50);
+    text-decoration: none; transition: color var(--transition);
+    line-height: 1.6;
+  }
+  .footer-col-links li a:hover { color: var(--electric); }
+
+  .footer-social-links { display: flex; flex-direction: column; gap: var(--space-md); }
+  .footer-social-link {
+    display: flex; align-items: center; gap: var(--space-md);
+    text-decoration: none; color: rgba(255,255,255,0.52);
+    font-size: var(--text-sm);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid rgba(42,127,212,0.12);
+    transition: all var(--transition);
+  }
+  .footer-social-link:hover {
+    color: #F0F0F5; border-color: var(--electric);
+    background: rgba(42,127,212,0.08);
+  }
+  .footer-social-link svg { flex-shrink: 0; opacity: 0.7; }
+  .footer-social-link:hover svg { opacity: 1; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(42,127,212,0.08);
+    padding: var(--space-lg) var(--space-xl);
+    max-width: var(--max-w); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: var(--space-md);
+  }
+  .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.28); letter-spacing: 0.06em; }
+  .footer-back-top {
+    font-size: 0.72rem; color: rgba(255,255,255,0.35);
+    text-decoration: none; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color var(--transition);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .footer-back-top:hover { color: var(--electric); }
+
+  /* ── FORM STATUS ──────────────────────────────────── */
+  .form-status {
+    font-size: var(--text-sm); padding: var(--space-md);
+    border-left: 3px solid transparent; margin-top: var(--space-md);
+    display: none;
+  }
+  .form-status.success { display: block; border-color: #22c55e; color: #86efac; background: rgba(34,197,94,0.08); }
+  .form-status.error   { display: block; border-color: #ef4444; color: #fca5a5; background: rgba(239,68,68,0.08); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+
+  /* ── RESPONSIVE FIXES ─────────────────────────────── */
+  @media (max-width: 1100px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--space-2xl); }
+  }
+  @media (max-width: 900px) {
+    .nav-hamburger { display: flex; }
+    .btn-nav { display: none; }
+    .about-grid, .areas-content { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr 1fr; }
+    .work-item:first-child { grid-row: auto; }
+    .nav-links { display: none; }
+    .hero-content { max-width: 100%; }
+    .contact-inner { display: flex; flex-direction: column; }
+    .contact-cards { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .footer-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .container { padding: 0 var(--space-lg); }
+    .hero-pillars { flex-wrap: wrap; gap: var(--space-md); }
+    .work-grid { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: repeat(3,1fr); }
+    .contact-title { font-size: clamp(2rem, 10vw, 3rem); }
+    .contact-cards { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; align-items: flex-start; }
+    .hero-ctas .btn-primary, .hero-ctas .btn-whatsapp, .hero-ctas .btn-ghost { width: 100%; justify-content: center; }
+    .why-grid { grid-template-columns: 1fr; }
+    .section-divider::before { left: 10%; right: 10%; }
+    .slider-prev { left: -14px; }
+    .slider-next { right: -14px; }
+  }
+
 </style>
+<!-- Google Analytics — replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
 <!-- Fixed page background -->
@@ -1205,6 +1341,7 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── SERVICES ── -->
 <section class="section-services" id="services">
@@ -1342,6 +1479,7 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── ABOUT ── -->
 <section class="section-about" id="about">
@@ -1377,6 +1515,7 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── WORK ── -->
 <section class="section-work" id="work">
@@ -1425,6 +1564,7 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── WHY BCS ── -->
 <section class="section-why" id="why">
@@ -1462,6 +1602,7 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── SERVICE AREAS ── -->
 <section class="section-areas" id="areas">
@@ -1496,6 +1637,7 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── TESTIMONIALS ── -->
 <section class="section-testimonials">
@@ -1510,6 +1652,7 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── CONTACT ── -->
 <section class="section-contact" id="contact">
@@ -1528,20 +1671,38 @@
           <a href="tel:0795035984" class="btn-ghost">📞 079 503 5984</a>
         </div>
         
-        <form class="contact-form reveal">
+        <form class="contact-form reveal" id="contactForm">
+          <!-- Formspree: go to formspree.io, create a free form, paste your endpoint in the JS below -->
           <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input type="text" class="form-input" placeholder="Enter your name" required>
+            <label class="form-label" for="cf-name">Full Name</label>
+            <input id="cf-name" type="text" name="name" class="form-input" placeholder="Enter your name" required autocomplete="name">
           </div>
           <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" class="form-input" placeholder="Enter your email" required>
+            <label class="form-label" for="cf-phone">Phone Number</label>
+            <input id="cf-phone" type="tel" name="phone" class="form-input" placeholder="e.g. 079 503 5984" autocomplete="tel">
           </div>
           <div class="form-group">
-            <label class="form-label">Project Details</label>
-            <textarea class="form-input" rows="4" placeholder="Tell us about your requirements..." required></textarea>
+            <label class="form-label" for="cf-email">Email Address</label>
+            <input id="cf-email" type="email" name="email" class="form-input" placeholder="Enter your email" required autocomplete="email">
           </div>
-          <button type="submit" class="btn-submit">Request Quote</button>
+          <div class="form-group">
+            <label class="form-label" for="cf-service">Service Needed</label>
+            <select id="cf-service" name="service" class="form-input">
+              <option value="">Select a service...</option>
+              <option>Machine Automation & Drive Systems</option>
+              <option>Solar Power Installation</option>
+              <option>CCTV Camera Installation</option>
+              <option>Electrical Installations & Maintenance</option>
+              <option>Electrical Panel Building</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cf-msg">Project Details</label>
+            <textarea id="cf-msg" name="message" class="form-input" rows="4" placeholder="Tell us about your requirements..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">Send Message</button>
+          <div class="form-status" id="formStatus"></div>
         </form>
 
       </div>
@@ -1570,23 +1731,67 @@
     </div>
   </div>
 </section>
+<div class="section-divider" aria-hidden="true"></div>
 
 <!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-brand">Barnard Control Systems</div>
-    <div class="footer-tagline">Powering Your Future with Smart Solutions · George, Western Cape</div>
-    <div class="footer-socials">
-      <a href="https://www.facebook.com/share/1CQ4Fr9H28/" target="_blank" rel="noopener noreferrer">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        Facebook
-      </a>
-      <a href="https://www.instagram.com/barnardcontrolsystems?igsh=aWV1MTJzam52bWI5" target="_blank" rel="noopener noreferrer">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        Instagram
-      </a>
+  <div class="footer-grid">
+
+    <!-- Brand -->
+    <div class="footer-col-brand">
+      <div class="footer-logo-text">Barnard Control Systems</div>
+      <div class="footer-logo-sub">Power · Security · Automation</div>
+      <p>Professional electrical contracting and automation solutions across the Western Cape. Based in George, serving the whole of South Africa.</p>
     </div>
-    <div class="footer-tagline" style="margin-top:12px">© 2025 BCS · #BarnardControlSystems</div>
+
+    <!-- Services -->
+    <div>
+      <p class="footer-col-heading">Services</p>
+      <ul class="footer-col-links">
+        <li><a href="#services">Machine Automation</a></li>
+        <li><a href="#services">Solar Installations</a></li>
+        <li><a href="#services">CCTV Security</a></li>
+        <li><a href="#services">Electrical Services</a></li>
+        <li><a href="#services">Panel Building</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <p class="footer-col-heading">Contact Us</p>
+      <ul class="footer-col-links">
+        <li><a href="tel:0795035984">079 503 5984</a></li>
+        <li><a href="mailto:Barnardcontrolsystems@gmail.com">barnardcontrolsystems<br>@gmail.com</a></li>
+        <li>George, Western Cape<br>South Africa</li>
+        <li style="margin-top:8px"><a href="https://wa.me/27795035984">WhatsApp Adriaan →</a></li>
+      </ul>
+    </div>
+
+    <!-- Socials -->
+    <div>
+      <p class="footer-col-heading">Follow Us</p>
+      <div class="footer-social-links">
+        <a href="https://www.facebook.com/share/1CQ4Fr9H28/" target="_blank" rel="noopener noreferrer" class="footer-social-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+        <a href="https://www.instagram.com/barnardcontrolsystems?igsh=aWV1MTJzam52bWI5" target="_blank" rel="noopener noreferrer" class="footer-social-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Barnard Control Systems · George, Western Cape, South Africa · All Rights Reserved</span>
+    <a href="#" class="footer-back-top">↑ Back to top</a>
   </div>
 </footer>
 
@@ -1652,6 +1857,44 @@
     mobileNav.classList.remove('open');
     document.body.style.overflow = '';
   }));
+
+  // ── Live contact form (Formspree) ─────────────────────────────────
+  // SETUP: 1) Go to https://formspree.io  2) Sign up free with barnardcontrolsystems@gmail.com
+  //        3) Create a new form  4) Replace YOUR_FORM_ID below with your form's ID
+  const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn    = document.getElementById('submitBtn');
+      const status = document.getElementById('formStatus');
+      const orig   = btn.textContent;
+      btn.textContent = 'Sending…'; btn.disabled = true;
+      status.className = 'form-status'; status.textContent = '';
+
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { Accept: 'application/json' }
+        });
+        if (res.ok) {
+          status.textContent = '✓ Message received! We'll be in touch within 24 hours.';
+          status.className = 'form-status success';
+          contactForm.reset();
+          if (typeof gtag !== 'undefined') gtag('event', 'form_submit', { event_category: 'Contact' });
+        } else {
+          const data = await res.json();
+          throw new Error(data.errors ? data.errors.map(e=>e.message).join(', ') : 'Submission failed');
+        }
+      } catch (err) {
+        status.textContent = '✗ ' + (err.message || 'Something went wrong') + '. Call us directly: 079 503 5984';
+        status.className = 'form-status error';
+      }
+      btn.textContent = orig; btn.disabled = false;
+    });
+  }
 
   // Services slider
   const slider = document.getElementById('servicesSlider');
