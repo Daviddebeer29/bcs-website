@@ -603,6 +603,17 @@
     flex-shrink: 0;
   }
   .btn-gallery-more.open svg { transform: rotate(180deg); }
+  [data-theme="light"] .btn-gallery-more {
+    background: rgba(255,255,255,0.90);
+    border: 1.5px solid var(--electric);
+    color: var(--electric);
+    box-shadow: 0 2px 12px rgba(26,95,170,0.15);
+  }
+  [data-theme="light"] .btn-gallery-more:hover {
+    background: var(--electric);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(26,95,170,0.35);
+  }
 
   /* ── WHY BCS ──────────────────────────────────── */
   .section-why {
