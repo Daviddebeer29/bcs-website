@@ -1053,14 +1053,18 @@
 
   /* ── FIXED SITE BACKGROUND ──────────────────────── */
   .site-bg {
-    position: fixed; inset: 0; z-index: -2;
-    background-size: cover; background-position: center;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
   }
   /* Dark overlay so content stays readable */
   .site-bg::after {
     content: ''; position: absolute; inset: 0;
-    background: rgba(4, 8, 20, 0.55);
+    background: rgba(4, 8, 20, 0.38);
   }
 
   /* Semi-transparent section backgrounds (let image breathe through) */
@@ -1108,9 +1112,6 @@
   .section-contact {
     border-top: 1px solid rgba(42,127,212,0.08);
   }
-
-  /* ── HERO SECTION TRANSPARENT (bg now on site-bg) ─── */
-  .hero { background: transparent !important; }
 
   @media (max-width: 900px) {
     .nav-hamburger { display: flex; }
@@ -1596,16 +1597,19 @@
 </button>
 
 <script>
-  // Move hero background image to fixed site-bg div (parallax)
+  // Move hero background image to fixed site-bg div (whole-page background)
   (function() {
     const siteBg = document.getElementById('siteBg');
     const heroEl = document.querySelector('.hero');
     if (!siteBg || !heroEl) return;
-    const img = getComputedStyle(heroEl).backgroundImage;
-    if (img && img !== 'none') {
+    // Read BEFORE any style change
+    const img = window.getComputedStyle(heroEl).backgroundImage;
+    if (img && img !== 'none' && img !== '') {
       siteBg.style.backgroundImage = img;
+      // Clear from hero so it doesn't double-render
+      heroEl.style.backgroundImage = 'none';
+      heroEl.style.backgroundColor = 'transparent';
     }
-    heroEl.style.backgroundImage = 'none';
   })();
 
   // Scroll reveal
