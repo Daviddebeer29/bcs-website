@@ -1128,60 +1128,50 @@
     min-height: 480px;
   }
 
-  /* ── Water fill on card body — clip-path approach ── */
+  /* ── Water fill on card body ── */
   .service-card-body {
     position: relative;
     overflow: hidden;
     isolation: isolate;
   }
-  /* The water element exactly fills card-body via inset:0.
-     clip-path reveals it from the bottom upward.
-     7 matching vertices in all states = smooth interpolation. */
+  /* scaleY from bottom: fills EXACTLY — no overflow ever possible */
   .service-card-body::before {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(4, 15, 60, 0.98)  0%,
-      rgba(8,  40, 120, 0.95) 30%,
-      rgba(18, 80, 190, 0.90) 60%,
-      rgba(0, 160, 230, 0.82) 80%,
-      rgba(0, 212, 255, 0.68) 100%
+      rgba(4,  15,  60,  0.98) 0%,
+      rgba(8,  40,  120, 0.95) 28%,
+      rgba(18, 80,  190, 0.90) 58%,
+      rgba(0,  160, 230, 0.82) 80%,
+      rgba(0,  212, 255, 0.68) 100%
     );
-    /* start: all vertices below 100% — element invisible */
-    clip-path: polygon(
-      0%   110%, 25%  110%,
-      50%  110%, 75%  110%,
-      100% 110%, 100% 110%, 0% 110%
-    );
-    transition: clip-path 0.88s cubic-bezier(0.16, 1, 0.30, 1);
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    transition: transform 0.85s cubic-bezier(0.16, 1, 0.30, 1);
     z-index: 0;
     pointer-events: none;
   }
-  /* on hover: top 5 vertices rise to form a gentle wave surface */
   .service-card:hover .service-card-body::before {
-    clip-path: polygon(
-      0%   3%, 25%  0%,
-      50%  3%, 75%  0%,
-      100% 3%, 100% 100%, 0% 100%
-    );
-    animation: water-wave 3s ease-in-out 0.85s infinite;
+    transform: scaleY(1);
+    animation: water-ripple 2.6s ease-in-out 0.82s infinite;
   }
-  @keyframes water-wave {
+  @keyframes water-ripple {
     0%, 100% {
-      clip-path: polygon(
-        0%   3%, 25%  0%,
-        50%  3%, 75%  0%,
-        100% 3%, 100% 100%, 0% 100%
-      );
+      transform: scaleY(1);
+      border-top-left-radius:  55% 10px;
+      border-top-right-radius: 45%  6px;
     }
-    50% {
-      clip-path: polygon(
-        0%   0%, 25%  3%,
-        50%  0%, 75%  3%,
-        100% 0%, 100% 100%, 0% 100%
-      );
+    33% {
+      transform: scaleY(1);
+      border-top-left-radius:  40%  5px;
+      border-top-right-radius: 60% 12px;
+    }
+    66% {
+      transform: scaleY(1);
+      border-top-left-radius:  62% 13px;
+      border-top-right-radius: 38%  4px;
     }
   }
   .service-card-body > * { position: relative; z-index: 1; }
