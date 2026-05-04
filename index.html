@@ -1044,12 +1044,8 @@
     transform: translateY(-2px);
   }
 
-  /* ── SERVICE CARD — WATER FILL EFFECT ──────────────── */
+  /* ── SERVICE CARD HOVER ─────────────────────────────── */
 
-  .service-card > * { position: relative; z-index: 2; }
-  .service-card::after { z-index: 3; }
-    50%       { border-radius: 58% 42% 0 0 / 13px 22px 0 0; }
-  }
   .service-card:hover {
     border-top-color: var(--electric);
     box-shadow: 0 10px 40px rgba(42,127,212,0.40);
@@ -1132,36 +1128,61 @@
     min-height: 480px;
   }
 
-  /* ── Water fill on card body ── */
+  /* ── Water fill on card body — clip-path approach ── */
   .service-card-body {
     position: relative;
     overflow: hidden;
+    isolation: isolate;
   }
+  /* The water element exactly fills card-body via inset:0.
+     clip-path reveals it from the bottom upward.
+     7 matching vertices in all states = smooth interpolation. */
   .service-card-body::before {
     content: '';
     position: absolute;
-    left: -8%; bottom: 0;
-    width: 116%; height: 0%;
+    inset: 0;
     background: linear-gradient(
       to top,
-      rgba(4, 22, 72, 0.97) 0%,
-      rgba(14, 54, 140, 0.92) 35%,
-      rgba(42, 127, 212, 0.82) 68%,
-      rgba(0, 200, 255, 0.52) 100%
+      rgba(4, 15, 60, 0.98)  0%,
+      rgba(8,  40, 120, 0.95) 30%,
+      rgba(18, 80, 190, 0.90) 60%,
+      rgba(0, 160, 230, 0.82) 80%,
+      rgba(0, 212, 255, 0.68) 100%
     );
-    border-radius: 46% 54% 0 0 / 22px 18px 0 0;
-    transition: height 0.78s cubic-bezier(0.16, 1, 0.30, 1);
+    /* start: all vertices below 100% — element invisible */
+    clip-path: polygon(
+      0%   110%, 25%  110%,
+      50%  110%, 75%  110%,
+      100% 110%, 100% 110%, 0% 110%
+    );
+    transition: clip-path 0.88s cubic-bezier(0.16, 1, 0.30, 1);
     z-index: 0;
     pointer-events: none;
   }
+  /* on hover: top 5 vertices rise to form a gentle wave surface */
   .service-card:hover .service-card-body::before {
-    height: 100%;
-    animation: water-swell 3s ease-in-out infinite;
+    clip-path: polygon(
+      0%   3%, 25%  0%,
+      50%  3%, 75%  0%,
+      100% 3%, 100% 100%, 0% 100%
+    );
+    animation: water-wave 3s ease-in-out 0.85s infinite;
   }
-  @keyframes water-swell {
-    0%, 100% { border-radius: 46% 54% 0 0 / 22px 16px 0 0; }
-    33%       { border-radius: 54% 46% 0 0 / 14px 24px 0 0; }
-    66%       { border-radius: 42% 58% 0 0 / 26px 12px 0 0; }
+  @keyframes water-wave {
+    0%, 100% {
+      clip-path: polygon(
+        0%   3%, 25%  0%,
+        50%  3%, 75%  0%,
+        100% 3%, 100% 100%, 0% 100%
+      );
+    }
+    50% {
+      clip-path: polygon(
+        0%   0%, 25%  3%,
+        50%  0%, 75%  3%,
+        100% 0%, 100% 100%, 0% 100%
+      );
+    }
   }
   .service-card-body > * { position: relative; z-index: 1; }
 
