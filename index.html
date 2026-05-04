@@ -2168,12 +2168,34 @@
     if (!open) { grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
   }
 
-  (function(){
-    if (typeof emailjs === 'undefined') return;
-    emailjs.init({ publicKey: 'k0TXver8XTI0GBHVT' });
+  function mailtoFallback(form) {
+    var name    = form.querySelector('[name="name"]').value;
+    var email   = form.querySelector('[name="email"]').value;
+    var phone   = form.querySelector('[name="phone"]').value || 'Not provided';
+    var service = form.querySelector('[name="service"]').value || 'Not specified';
+    var message = form.querySelector('[name="message"]').value;
+    var body = [
+      'Name: '    + name,
+      'Email: '   + email,
+      'Phone: '   + phone,
+      'Service: ' + service,
+      '',
+      'Message:',
+      message
+    ].join('\n');
+    var mailto = 'mailto:Barnardcontrolsystems@gmail.com'
+      + '?subject=' + encodeURIComponent('New Enquiry from ' + name + ' — BCS Website')
+      + '&body='    + encodeURIComponent(body);
+    window.location.href = mailto;
+  }
 
+  (function(){
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
+
+    if (typeof emailjs !== 'undefined') {
+      emailjs.init({ publicKey: 'k0TXver8XTI0GBHVT' });
+    }
 
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -2183,6 +2205,12 @@
       btn.textContent = 'Sending…'; btn.disabled = true;
       status.className = 'form-status'; status.textContent = '';
 
+      if (typeof emailjs === 'undefined') {
+        mailtoFallback(contactForm);
+        btn.textContent = orig; btn.disabled = false;
+        return;
+      }
+
       emailjs.sendForm('service_69o809k', 'template_2ugn2ws', contactForm)
         .then(function() {
           status.textContent = '✓ Message received! We\'ll be in touch within 24 hours.';
@@ -2190,8 +2218,9 @@
           contactForm.reset();
           if (typeof gtag !== 'undefined') gtag('event', 'form_submit', { event_category: 'Contact' });
         }, function(err) {
-          status.textContent = '✗ Could not send — please call 079 503 5984 directly. (' + JSON.stringify(err) + ')';
-          status.className = 'form-status error';
+          status.textContent = 'Opening your email app as backup…';
+          status.className = 'form-status';
+          setTimeout(function() { mailtoFallback(contactForm); }, 800);
         })
         .finally(function() {
           btn.textContent = orig; btn.disabled = false;
