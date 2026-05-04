@@ -254,14 +254,46 @@
     text-transform: uppercase; letter-spacing: -0.01em;
     color: var(--white); margin-bottom: var(--space-lg);
   }
-  .hero-title span { 
-    color: var(--electric); 
+  .hero-title span {
+    color: var(--electric);
     display: inline-block;
     animation: glow-pulse 3s infinite alternate;
   }
   @keyframes glow-pulse {
     0% { text-shadow: 0 0 15px rgba(42, 127, 212, 0.2); }
     100% { text-shadow: 0 0 30px rgba(42, 127, 212, 0.6), 0 0 10px rgba(255, 255, 255, 0.3); }
+  }
+
+  /* ── ELECTRIC HIGHLIGHT — shared across all section headers ── */
+  .electric {
+    color: #00d4ff;
+    display: inline-block;
+    position: relative;
+    animation: electric-glow 2.8s ease-in-out infinite alternate;
+    background: linear-gradient(135deg, #00d4ff 0%, #2a7fd4 50%, #00ffe7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.55));
+  }
+  @keyframes electric-glow {
+    0% {
+      filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.45))
+              drop-shadow(0 0 18px rgba(0, 212, 255, 0.20));
+    }
+    100% {
+      filter: drop-shadow(0 0 14px rgba(0, 212, 255, 0.85))
+              drop-shadow(0 0 36px rgba(0, 212, 255, 0.45))
+              drop-shadow(0 0 60px rgba(42, 127, 212, 0.25));
+    }
+  }
+  /* In light mode — slightly deeper blue so gradient stays vivid */
+  [data-theme="light"] .electric {
+    background: linear-gradient(135deg, #0066cc 0%, #0099e6 55%, #0055aa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 6px rgba(0, 100, 200, 0.5));
   }
   .hero-tagline {
     font-size: var(--text-h2); font-weight: 300;
@@ -1547,7 +1579,7 @@
   <div class="container">
     <div class="hero-content">
       <div class="hero-eyebrow reveal">Western Cape's Industrial Specialists</div>
-      <h1 class="hero-title reveal">Powering<br>Your <span>Future</span><br>With Smart<br>Solutions</h1>
+      <h1 class="hero-title reveal">Powering<br>Your <span class="electric">Future</span><br>With Smart<br>Solutions</h1>
       <p class="hero-tagline reveal">Engineered. Built. Connected.</p>
       <div class="hero-pillars reveal">
         <div class="hero-pillar">
@@ -1689,7 +1721,7 @@
     <div class="about-grid">
       <div class="reveal">
         <p class="about-label">Who We Are</p>
-        <h2 class="about-heading">Smart Solutions.<br>Trusted Service.</h2>
+        <h2 class="about-heading">Smart Solutions.<br><span class="electric">Trusted</span> Service.</h2>
         <p class="about-text">Barnard Control Systems is a professional service provider specialising in electrical, solar, security and automation solutions across the Western Cape. Led by Adriaan Barnard, we are committed to delivering reliable, cost-effective and high-quality services to every client — from factories and commercial operations to homes and schools.</p>
         <p class="about-text">Our focus is on innovation, efficiency and customer satisfaction, ensuring every project is completed to the highest standard. We build long-term relationships through trust, quality and excellent service delivery.</p>
         <div class="about-stats">
@@ -1836,7 +1868,7 @@
   <div class="container">
     <div class="section-header reveal">
       <p class="section-eyebrow">Why Choose Us</p>
-      <h2 class="section-title">The BCS Difference</h2>
+      <h2 class="section-title">The BCS <span class="electric">Difference</span></h2>
     </div>
     <div class="why-grid">
       <div class="why-item stagger-fade">
@@ -1875,7 +1907,7 @@
     <div class="areas-content">
       <div class="reveal">
         <p class="about-label">Where We Work</p>
-        <h2 class="about-heading">Serving the Whole<br>of Western Cape</h2>
+        <h2 class="about-heading"><span class="electric">Serving</span> the Whole<br>of Western Cape</h2>
         <p class="about-text">Based in George, we travel across the Western Cape to deliver our services wherever they're needed — from the Garden Route to Stellenbosch and beyond.</p>
         <div class="areas-list">
           <div class="area-item">George</div>
@@ -1925,7 +1957,7 @@
   <div class="container">
     <div class="contact-inner">
       <div class="contact-hero reveal">
-        <h2 class="contact-title">Ready to<br><span>Power</span> Your<br>Project?</h2>
+        <h2 class="contact-title">Ready to<br><span class="electric">Power</span> Your<br>Project?</h2>
         <p class="contact-sub">Get in touch today for a professional assessment and quote.</p>
         <div class="contact-ctas">
           <a href="https://wa.me/27795035984" class="btn-whatsapp">
