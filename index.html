@@ -517,6 +517,24 @@
   }
   .about-visual {
     position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .about-video {
+    width: 100%; height: 500px; object-fit: cover;
+    display: block;
+    border-radius: var(--radius);
+  }
+  .about-video-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(4, 8, 20, 0.38) 0%,
+      rgba(4, 8, 20, 0.18) 50%,
+      rgba(4, 8, 20, 0.52) 100%
+    );
+    border-radius: var(--radius);
+    pointer-events: none;
   }
   .about-img {
     width: 100%; height: 500px; object-fit: cover;
@@ -1754,7 +1772,11 @@
         </div>
       </div>
       <div class="about-visual reveal">
-        <img src="IMG-20260503-WA0032.jpg" alt="BCS Industrial Work" class="about-img" loading="lazy">
+        <video class="about-video" autoplay muted loop playsinline preload="none"
+               aria-label="BCS industrial work in action">
+          <source src="Cinematic_slow_motion_macro_fo.mp4" type="video/mp4">
+        </video>
+        <div class="about-video-overlay"></div>
         <div class="about-badge">
           <div class="about-badge-line1">Barnard Control Systems</div>
           <div class="about-badge-line2">Electrical &amp; Automation Specialists</div>
